@@ -1,0 +1,125 @@
+@media screen and (max-width: 900px) {
+  body {
+    overflow-x: hidden !important;
+  }
+  .hide {
+    display: block;
+    font-size: 20px !important;
+  }
+  #sidebar {
+    width: 59px;
+  }
+  .ml {
+    width: 100%;
+  }
+  .hotel-search-container {
+    margin-left: 60px !important;
+    padding: 10px;
+    width: 85%;
+  }
+  input {
+    width: 100%;
+  }
+  #roomType {
+    width: 100%;
+  }
+  .dropdown-wrapper {
+    width: 100%;
+    margin: none;
+  }
+  .dropdown-toggle {
+    width: 100%;
+    margin: none;
+  }
+  .dropdown-content {
+    width: 300px;
+    padding: 5px;
+  }
+  .button-container {
+    width: 100%;
+    margin: none;
+  }
+  .search-button {
+    width: 100%;
+    margin: none;
+  }
+  .SecondMain {
+    margin-left: 60px !important;
+    height: fit-content;
+  }
+  .card {
+    border: 1px solid #aaaaaa;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  .snackbar {
+    margin-left: 50px !important;
+  }
+  .flex {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .btn {
+    display: none;
+  }
+  .inputs h2 {
+    font-size: 18px;
+  }
+  .increment-decrement {
+    width: 90%;
+  }
+  .user-management {
+    margin-left: 65px;
+    width: 81%;
+    flex-direction: column;
+  }
+  .todo {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .reservation-list {
+    padding: 10px;
+    width: 100%;
+  }
+  .reservation-list p {
+    padding: 5px;
+  }
+  .logout-modal {
+    width: 95%;
+  }
+  .modal-content p {
+    font-size: 15px;
+  }
+  .modal-buttons {
+    width: 80%;
+  }
+  .shift {
+    margin-left: 65px !important;
+    width: 90%;
+  }
+  .head h3 {
+    font-size: 17px;
+  }
+  .table-data .order table th {
+    font-size: 12px;
+    text-align: center;
+  }
+  .show {
+    display: none !important;
+  }
+
+  .table-data .order table td {
+    padding: 30px 0;
+  }
+  .table-data .order table th:first-of-type {
+    width: 15px;
+  }
+  .recent-reservations-container {
+    margin-left: 70px !important;
+    width: 80%;
+  }
+  .modal-content2 {
+    width: 80%;
+    margin-left: 50px;
+  }
+}
