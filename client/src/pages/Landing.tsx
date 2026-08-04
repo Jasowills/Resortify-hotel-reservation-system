@@ -4,6 +4,7 @@ import { ArrowRight, BedDouble, Palmtree, Waves, Wind } from 'lucide-react';
 import { Wordmark } from '@/components/Wordmark';
 import { Reveal } from '@/components/Reveal';
 import { RoomArt } from '@/components/RoomArt';
+import { HeroWave } from '@/components/HeroWave';
 import { Button } from '@/components/ui';
 import { api } from '@/lib/api';
 import { addDays, fmtMoney, todayISO } from '@/lib/format';
@@ -22,21 +23,21 @@ function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-[#0a1c17] text-[#f2ead9]">
-      <div className="pointer-events-none absolute inset-0 grain opacity-60" />
-      <div className="pointer-events-none absolute inset-0 opacity-40">
+      <HeroWave />
+      <div className="pointer-events-none absolute inset-0 z-10 grain opacity-40" />
+      <div className="pointer-events-none absolute inset-0 z-10">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'radial-gradient(900px 420px at 78% -8%, rgba(201,153,95,0.22), transparent 60%), linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px)',
-            backgroundSize: 'auto, 40px 40px, 40px 40px',
+              'radial-gradient(900px 420px at 78% -8%, rgba(201,153,95,0.22), transparent 60%)',
             maskImage: 'radial-gradient(120% 90% at 50% 10%, black 30%, transparent 100%)',
             opacity: 0.5,
           }}
         />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-5 pt-20 pb-10 md:pt-28 md:pb-14">
+      <div className="relative z-20 mx-auto max-w-6xl px-5 pt-20 pb-10 md:pt-28 md:pb-14">
         <p className="enter font-mono text-xs tracking-[0.3em] uppercase text-[#c9995f]" style={{ ['--d' as string]: '0ms' }}>
           A heritage seaside resort · est. 1931
         </p>

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BedDouble, Check, Waves } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BedDouble, Box, Check, Image, Waves } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { RoomArt } from '@/components/RoomArt';
+import { RoomViewer3D } from '@/components/RoomViewer3D';
 import { Button, Spinner, Alert } from '@/components/ui';
 import { api } from '@/lib/api';
 import {
@@ -14,6 +15,7 @@ import {
   todayISO,
 } from '@/lib/format';
 import type { Room } from '@/lib/types';
+import clsx from 'clsx';
 
 export default function RoomDetail() {
   const { id } = useParams();
@@ -28,6 +30,7 @@ export default function RoomDetail() {
   const [checkOut, setCheckOut] = useState(() => params.get('checkOut') ?? addDays(todayISO(), 3));
   const [guests, setGuests] = useState(() => Number(params.get('guests')) || 2);
   const [availableNow, setAvailableNow] = useState<boolean | null>(null);
+  const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
 
   useEffect(() => {
     if (!id) return;
@@ -95,7 +98,31 @@ export default function RoomDetail() {
         <div>
           <Reveal>
             <div className="room-plate overflow-hidden rounded-2xl hairline">
-              <RoomArt type={room.type} className="h-auto w-full" />
+              {viewMode === '2d' ? (
+                <RoomArt type={room.type} className="h-auto w-full" />
+              ) : (
+                <RoomViewer3D type={room.type} />
+              )}
+            </div>
+            <div className="mt-3 flex items-center gap-1 rounded-full border border-line p-0.5 w-fit">
+              <button
+                onClick={() => setViewMode('2d')}
+                className={clsx(
+                  'flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
+                  viewMode === '2d' ? 'bg-ink text-page' : 'text-muted hover:text-brass',
+                )}
+              >
+                <Image size={13} /> 2D
+              </button>
+              <button
+                onClick={() => setViewMode('3d')}
+                className={clsx(
+                  'flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
+                  viewMode === '3d' ? 'bg-ink text-page' : 'text-muted hover:text-brass',
+                )}
+              >
+                <Box size={13} /> 3D
+              </button>
             </div>
           </Reveal>
 

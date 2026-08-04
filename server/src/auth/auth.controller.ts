@@ -17,6 +17,11 @@ export class AuthController {
     return this.auth.login(dto);
   }
 
+  @Post('google')
+  google(@Body() body: { credential: string }) {
+    return this.auth.loginWithGoogle(body.credential);
+  }
+
   @Get('me')
   @UseGuards(AuthGuard('jwt'))
   me(@Req() req: { user: { userId: string } }) {

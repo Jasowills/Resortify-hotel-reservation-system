@@ -1,14 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { Reveal } from '@/components/Reveal';
 import { Wordmark } from '@/components/Wordmark';
 import { Button, Field, Spinner, Alert } from '@/components/ui';
 import { useAuth } from '@/lib/auth';
+import { api } from '@/lib/api';
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: {
+            client_id: string;
+            callback: (response: { credential: string }) => void;
+          }) => void;
+          renderButton: (parent: HTMLElement, config: Record<string, unknown>) => void;
+        };
+      };
+    };
+  }
+}
 
 export default function Auth() {
   const { login, register } = useAuth();
   const navigate = useNavigate();
+  const googleBtnRef = useRef<HTMLDivElement>(null);
 
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [name, setName] = useState('');
@@ -16,6 +34,52 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [googleReady, setGoogleReady] = useState(false);
+
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
+    if (!clientId || !googleBtnRef.current) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      if (!window.google) return;
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: async (response) => {
+          setBusy(true);
+          setError('');
+          try {
+            const res = await api.post<{ accessToken: string; user: { id: string; name: string; email: string; role: 'guest' | 'admin' } }>(
+              '/auth/google',
+              { credential: response.credential },
+            );
+            const { setToken } = await import('@/lib/api');
+            setToken(res.accessToken);
+            navigate(res.user.role === 'admin' ? '/admin' : '/');
+            window.location.reload();
+          } catch (err) {
+            setError(err instanceof Error ? err.message : 'Google sign-in failed');
+          } finally {
+            setBusy(false);
+          }
+        },
+      });
+      window.google.accounts.id.renderButton(googleBtnRef.current!, {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        width: googleBtnRef.current!.offsetWidth,
+        text: 'continue_with',
+        shape: 'pill',
+      });
+      setGoogleReady(true);
+    };
+    document.head.appendChild(script);
+    return () => { document.head.removeChild(script); };
+  }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -98,6 +162,19 @@ export default function Auth() {
               {mode === 'signin' ? 'Sign in' : 'Create account'}
             </Button>
           </form>
+
+          {googleReady && (
+            <div className="mt-6">
+              <div className="relative flex items-center gap-4">
+                <span className="h-px flex-1 bg-line" />
+                <span className="font-mono text-[0.625rem] tracking-[0.2em] uppercase text-faint">or</span>
+                <span className="h-px flex-1 bg-line" />
+              </div>
+              <div className="mt-4">
+                <div ref={googleBtnRef} className="flex justify-center [&>div]:w-full [&>div]:max-w-[300px]" />
+              </div>
+            </div>
+          )}
 
           <p className="mt-6 text-center text-xs text-faint">
             Demo desk · <span className="font-mono">admin@resortify.dev</span> / <span className="font-mono">AdminPass123!</span>
