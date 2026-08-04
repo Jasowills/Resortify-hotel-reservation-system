@@ -1,0 +1,17 @@
+{
+  "name": "resortify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Where stays become stories.",
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"cd server && npm run dev:mem\" \"cd client && npm run dev\"",
+    "build": "cd server && npm run build && cd ../client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jasowills/Resortify-hotel-reservation-system.git"
+  }
+}
