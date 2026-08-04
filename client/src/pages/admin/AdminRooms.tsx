@@ -56,6 +56,15 @@ export default function AdminRooms() {
     load();
   }, [load]);
 
+  useEffect(() => {
+    if (!creating) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setCreating(false);
+    }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [creating]);
+
   function openCreate() {
     setEditing(null);
     setForm(empty);
@@ -202,8 +211,8 @@ export default function AdminRooms() {
       )}
 
       {creating && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4" role="dialog" aria-modal="true">
-          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-page p-7">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4" role="dialog" aria-modal="true" onClick={() => setCreating(false)}>
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-page p-7" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between">
               <h2 className="font-display text-2xl font-medium text-ink">
                 {editing ? `Edit ${editing.name}` : 'New room'}

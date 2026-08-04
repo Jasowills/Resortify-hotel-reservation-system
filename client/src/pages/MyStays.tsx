@@ -28,6 +28,7 @@ export default function MyStays() {
   }, [load]);
 
   async function cancel(id: string) {
+    if (!window.confirm('Cancel this reservation? This cannot be undone.')) return;
     setCancelling(id);
     setError('');
     try {

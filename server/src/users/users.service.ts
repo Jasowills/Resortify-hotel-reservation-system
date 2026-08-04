@@ -33,6 +33,13 @@ export class UsersService {
   }
 
   async updateRole(id: string, role: UserRole): Promise<UserDocument> {
+    if (role !== 'admin') {
+      const adminCount = await this.countAdmins();
+      const target = await this.userModel.findById(id);
+      if (target?.role === 'admin' && adminCount <= 1) {
+        throw new ConflictException('Cannot demote the last admin');
+      }
+    }
     const user = await this.userModel.findByIdAndUpdate(id, { role }, { new: true });
     if (!user) throw new NotFoundException('User not found');
     return user;

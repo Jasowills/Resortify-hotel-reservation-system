@@ -65,7 +65,6 @@ export default function Rooms() {
   function applySearch() {
     const p = new URLSearchParams({ checkIn, checkOut, guests: String(guests) });
     navigate(`/rooms?${p.toString()}`);
-    void load();
   }
 
   const filtered = rooms.filter((r) => typeFilter === 'all' || r.type === typeFilter);

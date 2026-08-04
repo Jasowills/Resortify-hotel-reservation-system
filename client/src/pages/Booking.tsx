@@ -30,7 +30,11 @@ export default function Booking() {
   const [phone, setPhone] = useState('');
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId) {
+      setLoadingRoom(false);
+      setError('No room selected. Please choose a room first.');
+      return;
+    }
     setLoadingRoom(true);
     api
       .get<Room>(`/rooms/${roomId}`)

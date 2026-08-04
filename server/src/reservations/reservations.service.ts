@@ -89,19 +89,27 @@ export class ReservationsService {
     }
 
     const totalCost = nights * room.ratePerNight;
-    const reservation = await this.reservationModel.create({
-      reference: this.generateReference(),
-      user: new Types.ObjectId(userId),
-      room: new Types.ObjectId(room._id as Types.ObjectId),
-      guestName: dto.guestName,
-      guestEmail: dto.guestEmail.toLowerCase(),
-      guestPhone: dto.guestPhone ?? '',
-      checkIn,
-      checkOut,
-      guests: dto.guests,
-      totalCost,
-      status: 'confirmed',
-    });
+    let reservation: ReservationDocument;
+    try {
+      reservation = await this.reservationModel.create({
+        reference: this.generateReference(),
+        user: new Types.ObjectId(userId),
+        room: new Types.ObjectId(room._id as Types.ObjectId),
+        guestName: dto.guestName,
+        guestEmail: dto.guestEmail.toLowerCase(),
+        guestPhone: dto.guestPhone ?? '',
+        checkIn,
+        checkOut,
+        guests: dto.guests,
+        totalCost,
+        status: 'confirmed',
+      });
+    } catch (err) {
+      if ((err as any)?.code === 11000) {
+        throw new BadRequestException('This room was just booked by someone else. Please try different dates.');
+      }
+      throw err;
+    }
 
     return this.withRoomView(reservation);
   }
@@ -117,9 +125,19 @@ export class ReservationsService {
     }
 
     const docs = await this.reservationModel.find(filter).sort({ checkIn: 1 }).exec();
-    const views: ReservationView[] = [];
-    for (const doc of docs) views.push(await this.withRoomView(doc));
-    return views;
+    const roomIds = [...new Set(docs.map((d) => String(d.room)))];
+    const rooms = await Promise.all(roomIds.map((id) => this.rooms.findById(id)));
+    const roomMap = new Map(rooms.map((r) => [String(r._id), r]));
+    return docs.map((doc) => {
+      const room = roomMap.get(String(doc.room))!;
+      return this.toView(doc, {
+        id: String(room._id),
+        name: room.name,
+        number: room.number,
+        type: room.type,
+        ratePerNight: room.ratePerNight,
+      });
+    });
   }
 
   async getById(id: string, userId: string, admin = false): Promise<ReservationView> {

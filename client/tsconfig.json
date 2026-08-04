@@ -19,12 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
