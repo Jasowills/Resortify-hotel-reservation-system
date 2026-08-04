@@ -1,221 +1,66 @@
-# Resortify Hotel Reservation System
+# Resortify · Heritage Seaside Resort
 
-A comprehensive hotel reservation system built as a capstone project for the Thinkful curriculum. Resortify provides a complete solution for managing hotel bookings, room availability, and customer reservations.
+Where stays become stories.
 
-## 📋 Table of Contents
+A heritage seaside resort booking system — TypeScript, MongoDB, React, NestJS. Built to feel like a real brand, not a template.
 
-- [Overview](#overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Database Schema](#database-schema)
-- [Contributing](#contributing)
-- [License](#license)
+## Stack
 
-## 🏨 Overview
+- **Server** — NestJS 10, Mongoose 8, JWT, bcrypt, class-validator
+- **Client** — React 18, Vite, Tailwind CSS v4, React Router 6
+- **Database** — MongoDB (dev via `mongodb-memory-server`)
 
-Resortify is a full-stack hotel reservation system designed to streamline the booking process for both customers and hotel administrators. The system allows users to search for available rooms, make reservations, and manage their bookings, while providing administrators with tools to manage inventory and view booking analytics.
+## Quick start
 
-## ✨ Features
-
-### Customer Features
-- **Room Search & Booking**: Search for available rooms based on dates, room type, and guest capacity
-- **User Registration & Authentication**: Secure account creation and login system
-- **Booking Management**: View, modify, and cancel existing reservations
-- **Payment Processing**: Secure payment handling for reservations
-- **Booking Confirmation**: Email confirmations and booking receipts
-
-### Admin Features
-- **Dashboard**: Overview of bookings, revenue, and occupancy rates
-- **Room Management**: Add, edit, and manage room inventory
-- **Reservation Management**: View and manage all customer reservations
-- **User Management**: Manage customer accounts and access levels
-- **Analytics & Reporting**: Generate reports on bookings and revenue
-
-### System Features
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Real-time Availability**: Live room availability updates
-- **Search & Filter**: Advanced search and filtering options
-- **Date Validation**: Prevents invalid booking dates and conflicts
-
-## 🛠 Technologies Used
-
-### Frontend
-- **React.js** - User interface library
-- **JavaScript (ES6+)** - Programming language
-- **HTML5 & CSS3** - Markup and styling
-- **Bootstrap/Material-UI** - UI components and styling
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web application framework
-- **PostgreSQL** - Primary database
-- **Knex.js** - SQL query builder
-
-### Development Tools
-- **Git** - Version control
-- **npm** - Package management
-- **Postman** - API testing
-- **Jest** - Testing framework
-
-## 🚀 Installation
-
-### Prerequisites
-- Node.js (v14.0.0 or higher)
-- PostgreSQL (v12.0 or higher)
-- npm or yarn package manager
-
-### Setup Instructions
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Jasowills/Resortify-hotel-reservation-system.git
-   cd Resortify-hotel-reservation-system
-   ```
-
-2. **Install dependencies**
-   ```bash
-   # Install backend dependencies
-   npm install
-   
-   # Install frontend dependencies (if separate)
-   cd frontend
-   npm install
-   cd ..
-   ```
-
-3. **Database Setup**
-   ```bash
-   # Create database
-   createdb resortify_db
-   
-   # Run migrations
-   npx knex migrate:latest
-   
-   # Seed database with sample data
-   npx knex seed:run
-   ```
-
-4. **Environment Configuration**
-   Create a `.env` file in the root directory:
-   ```env
-   DATABASE_URL=postgresql://username:password@localhost/resortify_db
-   JWT_SECRET=your_jwt_secret_key
-   PORT=5000
-   NODE_ENV=development
-   ```
-
-5. **Start the application**
-   ```bash
-   # Start backend server
-   npm start
-   
-   # In another terminal, start frontend (if separate)
-   cd frontend
-   npm start
-   ```
-
-6. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
-
-## 📖 Usage
-
-### For Customers
-1. **Create an Account**: Register with email and password
-2. **Search Rooms**: Enter check-in/out dates and guest count
-3. **Select Room**: Choose from available room options
-4. **Make Payment**: Complete booking with secure payment
-5. **Manage Bookings**: View and modify reservations in your account
-
-### For Administrators
-1. **Admin Login**: Access admin panel with administrator credentials
-2. **Manage Rooms**: Add new rooms, update pricing and availability
-3. **View Reservations**: Monitor all customer bookings
-4. **Generate Reports**: Access booking and revenue analytics
-
-## 🔌 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-
-### Rooms
-- `GET /api/rooms` - Get all rooms
-- `GET /api/rooms/available` - Get available rooms by date
-- `GET /api/rooms/:id` - Get specific room details
-- `POST /api/rooms` - Create new room (Admin only)
-- `PUT /api/rooms/:id` - Update room (Admin only)
-- `DELETE /api/rooms/:id` - Delete room (Admin only)
-
-### Reservations
-- `GET /api/reservations` - Get user reservations
-- `POST /api/reservations` - Create new reservation
-- `GET /api/reservations/:id` - Get specific reservation
-- `PUT /api/reservations/:id` - Update reservation
-- `DELETE /api/reservations/:id` - Cancel reservation
-
-### Admin
-- `GET /api/admin/dashboard` - Get dashboard data
-- `GET /api/admin/reservations` - Get all reservations
-- `GET /api/admin/users` - Get all users
-
-## 🗄 Database Schema
-
-### Tables
-- **users**: User account information
-- **rooms**: Room inventory and details
-- **reservations**: Booking records
-- **payments**: Payment transaction records
-
-### Key Relationships
-- Users can have multiple reservations
-- Each reservation is linked to one room
-- Payments are associated with reservations
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 Development Notes
-
-### Running Tests
 ```bash
-npm test
+# server
+cd server
+npm install
+npm run dev:mem   # boots in-memory Mongo + seeds demo data
+
+# client (separate terminal)
+cd client
+npm install
+npm run dev       # http://localhost:5174 (proxies /api → :4000)
 ```
 
-### Code Style
-- Use ESLint for code linting
-- Follow Prettier formatting guidelines
-- Write meaningful commit messages
+## Demo accounts
 
-### Deployment
-The application can be deployed to platforms like:
-- Heroku (backend)
-- Netlify/Vercel (frontend)
-- Railway or DigitalOcean (full-stack)
+| Role | Email | Password |
+|------|-------|----------|
+| Admin (concierge) | `admin@resortify.dev` | `AdminPass123!` |
+| Guest | `demo@resortify.dev` | `DemoPass123!` |
 
-## 🐛 Known Issues
+## Design
 
-- Check the [Issues](https://github.com/Jasowills/Resortify-hotel-reservation-system/issues) page for current bugs and feature requests
+- **Palette** — cream, ink, pine, brass, sand
+- **Type** — Fraunces (serif display), Manrope (body), IBM Plex Mono (labels)
+- **Motifs** — rate-card format, brass underline, luggage-tag reference codes, hairline borders
+- **Theme** — light-first, dark pine theme via toggle
 
-## 📞 Support
+See `DESIGN.md` for the full brand spec.
 
-For support or questions about this project:
-- Create an issue on GitHub
-- Contact the developer through GitHub profile
+## API
 
-## 📄 License
+```
+POST   /api/auth/register        — create account
+POST   /api/auth/login           — get access token
+GET    /api/auth/me               — current user
 
-This project is part of the Thinkful curriculum capstone project. Please refer to the license file for usage terms.
+GET    /api/rooms                 — all rooms
+GET    /api/rooms/:id             — single room
+GET    /api/rooms/available       — ?checkIn=&checkOut=&guests=
+POST   /api/rooms                 — create (admin)
+PUT    /api/rooms/:id             — update (admin)
+DELETE /api/rooms/:id             — delete (admin)
 
----
+GET    /api/reservations          — guest: my stays / admin: all
+POST   /api/reservations          — book a room
+GET    /api/reservations/:id      — single reservation
+PUT    /api/reservations/:id      — update dates/guests
+PUT    /api/reservations/:id/status — change status
+GET    /api/reservations/metrics  — dashboard stats (admin)
 
-**Built with ❤️ by [Jasowills](https://github.com/Jasowills)**
+GET    /api/users                 — guest list (admin)
+PATCH  /api/users/:id/role        — promote/demote (admin)
+```

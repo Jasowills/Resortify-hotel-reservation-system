@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-page: var(--page);
+  --color-elev: var(--bg-elev);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brass: var(--accent);
+  --color-brass-strong: var(--accent-strong);
+  --color-brass-soft: var(--accent-soft);
+  --color-pine: var(--primary);
+  --color-pine-700: var(--primary-hover);
+  --color-pine-800: var(--primary-strong);
+  --color-cream: #fbf7ef;
+  --color-sand: #e7dcc8;
+  --color-sand-dark: #d8c9ac;
+  --color-danger: var(--danger);
+  --color-elev-soft: var(--elev-soft);
+
+  --shadow-card: 0 1px 2px rgb(27 23 18 / 0.04), 0 12px 32px -18px rgb(27 23 18 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(27 23 18 / 0.05), 0 28px 56px -24px rgb(27 23 18 / 0.28);
+
+  --ease-lobby: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+  --page: #fbf7ef;
+  --bg-elev: #f5eee0;
+  --card: #ffffff;
+  --ink: #1b1712;
+  --ink-soft: #3a332a;
+  --muted: #6e6352;
+  --faint: #9c8f78;
+  --line: #e7dcc8;
+  --line-strong: #d8c9ac;
+  --accent: #a97e4a;
+  --accent-strong: #8f6636;
+  --accent-soft: #e8d8be;
+  --primary: #12342c;
+  --primary-hover: #0e2620;
+  --primary-strong: #0a1c17;
+  --danger: #a43a2e;
+  --elev-soft: rgba(18, 52, 44, 0.05);
+  --halo: rgba(169, 126, 74, 0.12);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0a1c17;
+  --bg-elev: #0e2620;
+  --card: #12342c;
+  --ink: #f2ead9;
+  --ink-soft: #d8c9ac;
+  --muted: #a89a80;
+  --faint: #7d735f;
+  --line: #22483e;
+  --line-strong: #2f5a4e;
+  --accent: #c9995f;
+  --accent-strong: #e8d8be;
+  --accent-soft: #2f5a4e;
+  --primary: #f2ead9;
+  --primary-hover: #ffffff;
+  --primary-strong: #12342c;
+  --danger: #e0786a;
+  --elev-soft: rgba(242, 234, 217, 0.06);
+  --halo: rgba(201, 153, 95, 0.14);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.5s var(--ease-lobby), color 0.5s var(--ease-lobby);
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* ---------- branded utilities ---------- */
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@utility brass-rule {
+  display: block;
+  height: 2px;
+  width: 3rem;
+  background: var(--accent);
+}
+
+@utility hairline {
+  border: 1px solid var(--line);
+}
+
+@utility hairline-t {
+  border-top: 1px solid var(--line);
+}
+
+@utility hairline-b {
+  border-bottom: 1px solid var(--line);
+}
+
+@utility card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+/* line-art room plate background */
+.room-plate {
+  --plate: var(--line);
+  position: relative;
+  background: var(--elev-soft);
+}
+.room-plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle at 78% 24%, var(--halo), transparent 42%),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: auto, 26px 26px, 26px 26px;
+  mask-image: radial-gradient(120% 120% at 50% 40%, black 55%, transparent 100%);
+}
+.room-plate .plate-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s var(--ease-lobby), transform 0.8s var(--ease-lobby);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@keyframes tide {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2.5%);
+  }
+}
+.tide {
+  animation: tide 14s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.enter {
+  animation: fade-up 0.9s var(--ease-lobby) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* input baseline styling */
+.input-base {
+  width: 100%;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-base::placeholder {
+  color: var(--faint);
+}
+.input-base:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--halo);
+}
+.input-base:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.input-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
