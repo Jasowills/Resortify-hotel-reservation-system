@@ -69,7 +69,7 @@ export default function RoomDetail() {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-3 py-32 text-muted">
+      <div className="flex min-h-[60vh] items-center justify-center gap-3 text-muted">
         <Spinner /> Unlocking the door…
       </div>
     );
