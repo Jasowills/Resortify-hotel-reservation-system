@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, BedDouble, Palmtree, Waves, Wind } from 'lucide-react';
+import { ArrowRight, BedDouble, Moon, Palmtree, Quote, Sun, Waves, Wind } from 'lucide-react';
 import { Wordmark } from '@/components/Wordmark';
 import { Reveal } from '@/components/Reveal';
 import { RoomArt } from '@/components/RoomArt';
-import { HeroWave } from '@/components/HeroWave';
+import { HeroCinemagraph } from '@/components/HeroCinemagraph';
 import { Button } from '@/components/ui';
 import { api } from '@/lib/api';
 import { addDays, fmtMoney, todayISO } from '@/lib/format';
@@ -22,8 +22,8 @@ function Hero() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1c17] text-[#f2ead9]">
-      <HeroWave />
+    <section className="relative overflow-hidden text-[#f2ead9] md:flex md:min-h-[88vh] md:flex-col">
+      <HeroCinemagraph />
       <div className="pointer-events-none absolute inset-0 z-10 grain opacity-40" />
       <div className="pointer-events-none absolute inset-0 z-10">
         <div
@@ -36,25 +36,45 @@ function Hero() {
           }}
         />
       </div>
+      <div className="pointer-events-none absolute inset-0 z-10" style={{ background: 'rgba(6,16,12,0.38)' }} />
+      <div
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(10,28,23,0) 38%, rgba(10,28,23,0.25) 58%, rgba(10,28,23,0.6) 80%, rgba(10,28,23,0.85) 100%)',
+        }}
+      />
 
-      <div className="relative z-20 mx-auto max-w-6xl px-5 pt-20 pb-10 md:pt-28 md:pb-14">
-        <p className="enter font-mono text-xs tracking-[0.3em] uppercase text-[#c9995f]" style={{ ['--d' as string]: '0ms' }}>
+      <div className="relative z-20 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pt-20 pb-10 md:pt-24 md:pb-16">
+        <p
+          className="enter font-mono text-xs tracking-[0.3em] uppercase text-[#e0a96a]"
+          style={{ ['--d' as string]: '0ms', textShadow: '0 1px 12px rgba(0,0,0,0.5)' }}
+        >
           A heritage seaside resort · est. 1931
         </p>
 
-        <h1 className="enter mt-6 font-display font-medium tracking-tight text-6xl md:text-[6.5rem] leading-[0.95]" style={{ ['--d' as string]: '120ms' }}>
+        <h1
+          className="enter mt-6 font-display font-medium tracking-tight text-6xl md:text-[6.5rem] leading-[0.95]"
+          style={{
+            ['--d' as string]: '120ms',
+            textShadow: '0 2px 18px rgba(6,20,16,0.55), 0 1px 40px rgba(6,20,16,0.35)',
+          }}
+        >
           Where stays
           <br />
-          become <span className="text-[#c9995f] italic">stories.</span>
+          become <span className="text-[#e0a96a] italic">stories.</span>
         </h1>
 
-        <div className="enter mt-8 flex flex-col items-start gap-6 md:flex-row md:items-center md:gap-12" style={{ ['--d' as string]: '240ms' }}>
-          <p className="max-w-md text-base leading-relaxed text-[#a89a80]">
+        <div
+          className="enter mt-8 flex flex-col items-start gap-6 md:flex-row md:items-center md:gap-12"
+          style={{ ['--d' as string]: '240ms' }}
+        >
+          <p className="max-w-md text-base leading-relaxed text-[#dcd3bd]" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.5)' }}>
             Eight rooms, a walled garden, and a cove of your own. Book direct for the honest rate, the
             linen, and a front desk that remembers your name.
           </p>
-          <div className="flex items-center gap-3 text-sm text-[#7d735f]">
-            <Waves size={16} className="text-[#c9995f]" />
+          <div className="flex items-center gap-3 text-sm text-[#c4b48f]" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.55)' }}>
+            <Waves size={16} className="text-[#e0a96a]" />
             <span className="font-mono text-xs tracking-[0.2em] uppercase">Rooms from {fmtMoney(180)} / night</span>
           </div>
         </div>
@@ -219,6 +239,332 @@ function Editorial() {
   );
 }
 
+function Marquee() {
+  const items = [
+    'Eight rooms',
+    'One cove',
+    'Est. 1931',
+    'Breakfast under the pergola',
+    'No booking fees',
+    'The tide schedule is yours',
+  ];
+  const row = (key: string) => (
+    <div key={key} className="flex shrink-0 items-center" aria-hidden={key === 'b'}>
+      {items.map((it) => (
+        <span
+          key={it}
+          className="flex items-center gap-8 px-8 font-mono text-[0.6875rem] tracking-[0.28em] uppercase text-[#f2ead9]/75"
+        >
+          {it}
+          <span className="text-[#c9995f]">·</span>
+        </span>
+      ))}
+    </div>
+  );
+  return (
+    <div className="overflow-hidden border-y border-[#22483e] bg-[#0e2620] py-3.5">
+      <div className="marquee-track flex w-max">
+        {row('a')}
+        {row('b')}
+      </div>
+    </div>
+  );
+}
+
+function Grounds() {
+  const tiles = [
+    {
+      src: '/images/cove.jpg',
+      alt: 'The cove, lined with palms and turquoise water',
+      title: 'The cove at low tide',
+      meta: '~ est. 1931',
+    },
+    {
+      src: '/images/garden.jpg',
+      alt: 'The walled garden path in bloom',
+      title: 'The walled garden',
+      meta: 'figs · citrus',
+    },
+    {
+      src: '/images/pergola.jpg',
+      alt: 'Breakfast under the vine-covered pergola',
+      title: 'Under the pergola',
+      meta: 'breakfast',
+    },
+  ];
+
+  return (
+    <section className="mx-auto max-w-6xl px-5 py-20">
+      <Reveal>
+        <div className="flex items-end justify-between">
+          <div>
+            <span className="label">The grounds</span>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl font-medium tracking-tight text-ink">
+              Everything within the walls.
+            </h2>
+            <span className="brass-rule mt-4" />
+          </div>
+          <p className="hidden max-w-xs text-right text-sm leading-relaxed text-muted md:block">
+            A cove, a walled garden, and one long table under the pergola.
+          </p>
+        </div>
+      </Reveal>
+
+      <div className="mt-12 grid gap-6 md:grid-cols-3 md:grid-rows-2">
+        <Reveal delay={0} className="md:col-span-2 md:row-span-2">
+          <figure className="card h-full overflow-hidden">
+            <div className="relative aspect-[16/11] overflow-hidden">
+              <img
+                src={tiles[0].src}
+                alt={tiles[0].alt}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c17]/55 via-transparent to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                <span className="font-mono text-[0.6875rem] tracking-[0.22em] uppercase text-[#f2ead9]">{tiles[0].title}</span>
+                <span className="mono-num font-mono text-xs text-[#c9995f]">{tiles[0].meta}</span>
+              </figcaption>
+            </div>
+          </figure>
+        </Reveal>
+        {[1, 2].map((i) => (
+          <Reveal
+            key={tiles[i].title}
+            delay={i * 100}
+            className={i === 1 ? 'md:col-start-3 md:row-start-1' : 'md:col-start-3 md:row-start-2'}
+          >
+            <figure className="card h-full overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={tiles[i].src}
+                  alt={tiles[i].alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c17]/45 via-transparent to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between p-4">
+                  <span className="font-mono text-[0.6875rem] tracking-[0.22em] uppercase text-[#f2ead9]">{tiles[i].title}</span>
+                  <span className="mono-num font-mono text-xs text-[#c9995f]">{tiles[i].meta}</span>
+                </figcaption>
+              </div>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FieldNotes() {
+  const notes = [
+    {
+      body: 'We came for two nights and stayed for four. The cove in the evening is reason enough to never leave the coast.',
+      who: 'Marguerite & Jacques',
+      room: 'Room 4 · August 2026',
+    },
+    {
+      body: 'Breakfast under the pergola, figs still warm from the tree. Our daughter still talks about the tide.',
+      who: 'Amara',
+      room: 'Room 2 · July 2026',
+    },
+    {
+      body: 'The quietest place we have ever slept. You hear the tide turn at two in the morning and call it music.',
+      who: 'Tom',
+      room: 'Room 7 · June 2026',
+    },
+  ];
+  return (
+    <section className="bg-elev py-20">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <div className="flex items-end justify-between">
+            <div>
+              <span className="label">Field notes</span>
+              <h2 className="mt-3 font-display text-4xl md:text-5xl font-medium tracking-tight text-ink">
+                From the guest book.
+              </h2>
+              <span className="brass-rule mt-4" />
+            </div>
+          </div>
+        </Reveal>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {notes.map((n, i) => (
+            <Reveal key={n.who} delay={i * 120}>
+              <figure className="card relative flex h-full flex-col p-7">
+                <Quote className="absolute right-6 top-6 h-9 w-9 text-brass/25" />
+                <blockquote className="font-display text-xl italic leading-snug text-ink-soft">
+                  &ldquo;{n.body}&rdquo;
+                </blockquote>
+                <figcaption className="mt-auto pt-6">
+                  <div className="hairline-t pt-4">
+                    <span className="block font-semibold text-ink">{n.who}</span>
+                    <span className="label mt-1 block">{n.room}</span>
+                  </div>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const TIDE_PERIOD = 12.4206;
+const TIDE_EPOCH = Date.UTC(2026, 0, 1);
+const TIDE_PHASE = 2.2;
+
+function tideLevel(hours: number): number {
+  const m2 = Math.sin((hours / TIDE_PERIOD) * 2 * Math.PI + TIDE_PHASE);
+  const wobble = Math.sin((hours / 12.9) * 2 * Math.PI + 1.0) * 0.15;
+  return 0.5 + 0.5 * (0.85 * m2 + wobble);
+}
+
+function TideSchedule() {
+  const now = useMemo(() => new Date(), []);
+  const { nextEvents, pts, nowFrac } = useMemo(() => {
+    const start = new Date(now);
+    start.setHours(0, 0, 0, 0);
+    const t0 = (start.getTime() - TIDE_EPOCH) / 3600000;
+
+    const events: { type: 'high' | 'low'; time: Date; level: number }[] = [];
+    let v2 = tideLevel(t0 - 2 / 60);
+    let v1 = tideLevel(t0 - 1 / 60);
+    for (let m = 0; m <= 48 * 60; m++) {
+      const v = tideLevel(t0 + m / 60);
+      if (v1 > v2 && v1 >= v) events.push({ type: 'high', time: new Date(start.getTime() + (m - 1) * 60000), level: v1 });
+      if (v1 < v2 && v1 <= v) events.push({ type: 'low', time: new Date(start.getTime() + (m - 1) * 60000), level: v1 });
+      v2 = v1;
+      v1 = v;
+    }
+
+    const pts: number[] = [];
+    for (let i = 0; i <= 96; i++) pts.push(tideLevel(t0 + (i / 96) * 24));
+    const nowFrac = (now.getTime() - start.getTime()) / 86400000;
+    return { nextEvents: events.filter((e) => e.time > now).slice(0, 2), pts, nowFrac };
+  }, [now]);
+
+  const CW = 100;
+  const CH = 40;
+  const PAD = 5;
+  const path = pts.map((v, i) => `${((i / (pts.length - 1)) * CW).toFixed(2)},${(CH - PAD - v * (CH - 2 * PAD)).toFixed(2)}`).join(' ');
+  const nowX = (nowFrac * CW).toFixed(2);
+  const nowY = (CH - PAD - pts[Math.round(nowFrac * 96)] * (CH - 2 * PAD)).toFixed(2);
+
+  return (
+    <section className="bg-[#0a1c17] py-20">
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="grid gap-10 md:grid-cols-[1fr_1.35fr] md:items-center md:gap-16">
+          <Reveal>
+            <span className="font-mono text-xs tracking-[0.3em] uppercase text-[#c9995f]">Today&rsquo;s tide</span>
+            <h2 className="mt-6 font-display text-4xl md:text-5xl font-medium tracking-tight text-[#f2ead9]">
+              The cove keeps
+              <br />
+              <span className="italic text-[#c9995f]">its own clock.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-[#a89a80]">
+              Two highs and two lows a day, drawn for the cove behind the wall. Check the board at the
+              desk on your way out; the evening swim is best an hour before low.
+            </p>
+            <div className="mt-8 grid grid-cols-2 gap-3">
+              {nextEvents.map((e) => (
+                <div key={e.time.getTime()} className="rounded-xl border border-[#2f5a4e] bg-[#12342c] p-4">
+                  <span className="flex items-center gap-2 font-mono text-[0.6875rem] tracking-[0.22em] uppercase text-[#a89a80]">
+                    {e.type === 'high' ? <Sun size={14} className="text-[#c9995f]" /> : <Moon size={14} className="text-[#c9995f]" />}
+                    {e.type === 'high' ? 'High' : 'Low'}
+                  </span>
+                  <span className="mono-num mt-2 block text-2xl font-semibold text-[#f2ead9]">
+                    {e.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                  <span className="mt-1 block font-mono text-xs text-[#a89a80]">{(0.6 + e.level * 3).toFixed(1)} m</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-[#7d735f]">
+              Approximate · drawn for the cove
+            </p>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="rounded-2xl border border-[#2f5a4e] bg-[#12342c] p-6 md:p-8">
+              <div className="flex items-baseline justify-between">
+                <span className="label !text-[#a89a80]">
+                  {now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' })}
+                </span>
+                <Waves size={18} className="text-[#c9995f]" />
+              </div>
+              <svg
+                viewBox={`0 0 ${CW} ${CH}`}
+                className="mt-6 w-full"
+                preserveAspectRatio="none"
+                role="img"
+                aria-label="Tide curve for today"
+              >
+                <polyline points={path} fill="none" stroke="#c9995f" strokeWidth="1.5" strokeLinejoin="round" />
+                <line x1={nowX} y1="0" x2={nowX} y2={CH} stroke="rgba(242,234,217,0.4)" strokeDasharray="2 3" />
+                <circle cx={nowX} cy={nowY} r="2.6" fill="#f2ead9" />
+              </svg>
+              <div className="mt-3 flex justify-between font-mono text-[0.625rem] tracking-[0.2em] text-[#7d735f]">
+                <span>00</span>
+                <span>06</span>
+                <span>12</span>
+                <span>18</span>
+                <span>24</span>
+              </div>
+              <p className="mt-6 text-xs leading-relaxed text-[#a89a80]">
+                Now at <span className="mono-num text-[#f2ead9]">{(0.6 + pts[Math.round(nowFrac * 96)] * 3).toFixed(1)} m</span> and{' '}
+                {nowFrac < 0.5 ? 'rising' : 'falling'}.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StayNotes() {
+  const faqs = [
+    { q: 'What time is check-in and check-out?', a: 'Check-in is from three in the afternoon; check-out is by eleven. Early arrival or a late train, just let the desk know.' },
+    { q: 'Is breakfast included?', a: 'Yes. Served under the pergola each morning — fruit from the walled garden, bread from the village, and coffee until it runs out.' },
+    { q: 'Are there booking fees?', a: 'No. Book direct for the honest rate, and cancel free of charge up to 48 hours before arrival.' },
+    { q: 'How do we reach the cove?', a: 'Half a mile of dunes past the front gate. Towels are at the desk; the tide schedule is on the board.' },
+    { q: 'Are children welcome?', a: 'The garden and the cove are theirs. Rooms two through six sleep three, and a cot is on the house.' },
+    { q: 'Is it quiet?', a: 'You will hear the tide and the birds. The old coast road stays behind the wall — it never finds you.' },
+  ];
+  return (
+    <section className="mx-auto max-w-6xl px-5 py-20">
+      <Reveal>
+        <div className="flex items-end justify-between">
+          <div>
+            <span className="label">Stay notes</span>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl font-medium tracking-tight text-ink">
+              The fine print, honestly.
+            </h2>
+            <span className="brass-rule mt-4" />
+          </div>
+        </div>
+      </Reveal>
+      <div className="mt-10 grid gap-x-14 gap-y-2 md:grid-cols-2">
+        {faqs.map((f, i) => (
+          <Reveal key={f.q} delay={(i % 2) * 100}>
+            <details className="group">
+              <summary className="flex cursor-pointer list-none items-baseline justify-between gap-4 border-b border-line py-5">
+                <span className="font-display text-xl font-medium text-ink transition-colors group-open:text-brass">
+                  {f.q}
+                </span>
+                <span className="shrink-0 font-mono text-sm text-faint transition-transform duration-300 group-open:rotate-45">+</span>
+              </summary>
+              <p className="pt-3 pb-5 text-sm leading-relaxed text-muted">{f.a}</p>
+            </details>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function CTA() {
   return (
     <section className="bg-[#0a1c17]">
@@ -259,8 +605,13 @@ export default function Landing() {
   return (
     <>
       <Hero />
+      <Marquee />
       <FeaturedRooms />
+      <Grounds />
       <Editorial />
+      <FieldNotes />
+      <TideSchedule />
+      <StayNotes />
       <CTA />
 
       {/* mobile rooms link */}
